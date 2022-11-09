@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app/controller/cubit/cubit.dart';
-import 'package:shop_app/controller/cubit/states.dart';
+
 import 'package:shop_app/view/components.dart';
+
+import '../../controller/bloc/cubits/loginCubit.dart';
+import '../../controller/bloc/states/loginStates.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = "/login";
@@ -15,11 +17,11 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ShopCubit(),
-      child: BlocConsumer<ShopCubit, ShopState>(
+      create: (_) => LoginCubit(),
+      child: BlocConsumer<LoginCubit, LoginState>(
           listener: (ctx, state) {},
           builder: (ctx, state) {
-            ShopCubit cubit = ShopCubit.get(ctx);
+            LoginCubit cubit = LoginCubit.get(ctx);
             return Scaffold(
               body: SafeArea(
                 child: Center(
