@@ -18,12 +18,19 @@ dependencies:
   smooth_page_indicator:
   bloc:
   flutter_bloc:
+  dio:
+  fluttertoast:
+  hive:
+  hive_flutter:
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  hive_generator:
+  build_runner:
 
 
   flutter_lints: ^2.0.0

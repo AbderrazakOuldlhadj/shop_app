@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:shop_app/view/screens/LoginScreen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -29,8 +30,11 @@ class OnBoardingScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           InkWell(
-              onTap: () => Navigator.of(context)
-                  .pushReplacementNamed(LoginScreen.routeName),
+              onTap: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(LoginScreen.routeName);
+                Hive.box('data').put("isOnBoarding", false);
+              },
               child: const Text(
                 "SKIP",
                 style: TextStyle(
@@ -82,6 +86,8 @@ class OnBoardingScreen extends StatelessWidget {
                       print("push to login ");
                       Navigator.of(context)
                           .pushReplacementNamed(LoginScreen.routeName);
+                      Hive.box('data').put("isOnBoarding", false);
+
                       return;
                     }
                     _pageController.nextPage(
@@ -104,7 +110,7 @@ class OnBoardingScreen extends StatelessWidget {
           const SizedBox(height: 50),
           Text(
             model.title,
-            style: titleTextStyle ,
+            style: titleTextStyle,
           ),
           const SizedBox(height: 10),
           Text(

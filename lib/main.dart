@@ -1,18 +1,35 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shop_app/controller/cashing/HiveKeys.dart';
+import 'package:shop_app/view/screens/HomeScreen.dart';
 import 'package:shop_app/view/screens/LoginScreen.dart';
 import 'package:shop_app/view/screens/OnBoardingScreen.dart';
 
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-  ));
-  runApp(const MyApp());
+import 'controller/bloc/observer.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
+
+  await Hive.initFlutter();
+  await Hive.openBox('data');
+  //await Hive.box('data').clear();
+  Widget widget;
+  bool isOnBoarding = Hive.box('data').get(HiveKeys.isOnBoarding) ?? true;
+  bool isLogged = Hive.box('data').get(HiveKeys.token) != null;
+  widget = isOnBoarding
+      ? OnBoardingScreen()
+      : (!isLogged ? LoginScreen() : HomeScreen());
+  runApp(MyApp(widget));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  Widget widget;
+
+  MyApp(this.widget);
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +54,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: OnBoardingScreen(),
-
+      home: widget,
       routes: {
-        LoginScreen.routeName: (_) =>  LoginScreen(),
+        LoginScreen.routeName: (_) => LoginScreen(),
+        HomeScreen.routeName: (_) => HomeScreen(),
       },
     );
   }
