@@ -15,6 +15,7 @@ class Api {
         onRequest: (options, handler) async {
           final token = Hive.box('data').get(HiveKeys.token) ?? "";
           options.headers = {
+            'lang' : 'en',
             'Content-Type': 'application/json',
             'Authorization' : token,
           };

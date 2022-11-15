@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:shop_app/controller/cashing/HiveKeys.dart';
 
 import 'package:shop_app/view/components.dart';
-import 'package:shop_app/view/screens/HomeScreen.dart';
+import 'package:shop_app/view/screens/ShopLayout.dart';
 
 import '../../controller/bloc/cubits/loginCubit.dart';
 import '../../controller/bloc/states/loginStates.dart';
@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginState>(listener: (ctx, state) {
         if (state is LoginSuccessState) {
           if (state.loginModel.status) {
-            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(ShopLayout.routeName);
             Hive.box('data').put(HiveKeys.token, state.loginModel.data?.token);
           } else {
             showToast(state.loginModel.message);
