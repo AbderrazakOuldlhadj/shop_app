@@ -7,6 +7,8 @@ import 'package:shop_app/controller/cashing/HiveKeys.dart';
 import 'package:shop_app/view/components.dart';
 import 'package:shop_app/view/screens/LoginScreen.dart';
 
+import 'SerachScreen.dart';
+
 class ShopLayout extends StatelessWidget {
   static const routeName = '/home';
 
@@ -18,13 +20,29 @@ class ShopLayout extends StatelessWidget {
         ShopCubit cubit = ShopCubit.get(ctx);
         return Scaffold(
           appBar: AppBar(
-            title: const Text("Sella"),
-            
+            title: const Text("Hanuuty"),
+            actions: [
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed(SearchScreen.routeName);
+                },
+                child: const Icon(
+                  Icons.search,
+                  size: 35,
+                ),
+              ),
+              const SizedBox(width: 5),
+            ],
           ),
           body: cubit.bottomScreens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.currentIndex,
-            onTap: (index) => cubit.navigateToScreen(index),
+            onTap: (index) async {
+              /* if (index == 2) {
+                await cubit.getFavorites();
+              } */
+              cubit.navigateToScreen(index);
+            },
             items: const [
               BottomNavigationBarItem(
                 backgroundColor: primaryColor,

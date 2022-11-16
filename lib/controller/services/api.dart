@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:shop_app/controller/cashing/HiveKeys.dart';
@@ -14,10 +15,12 @@ class Api {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final token = Hive.box('data').get(HiveKeys.token) ?? "";
+          debugPrint(token);
+
           options.headers = {
-            'lang' : 'en',
+            'lang': 'en',
             'Content-Type': 'application/json',
-            'Authorization' : token,
+            'Authorization': token,
           };
           return handler.next(options);
         },

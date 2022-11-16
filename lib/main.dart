@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shop_app/controller/bloc/cubits/shopCubit.dart';
 import 'package:shop_app/controller/cashing/HiveKeys.dart';
+import 'package:shop_app/view/screens/SerachScreen.dart';
 import 'package:shop_app/view/screens/ShopLayout.dart';
 import 'package:shop_app/view/screens/LoginScreen.dart';
 import 'package:shop_app/view/screens/OnBoardingScreen.dart';
@@ -38,7 +39,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (BuildContext context) => ShopCubit()..getHomeData(),
+            create: (BuildContext context) => ShopCubit()
+              ..getHomeData()
+              ..getCategories()
+              ..getFavorites(),
           ),
         ],
         child: MaterialApp(
@@ -66,6 +70,7 @@ class MyApp extends StatelessWidget {
           routes: {
             LoginScreen.routeName: (_) => LoginScreen(),
             ShopLayout.routeName: (_) => ShopLayout(),
+            SearchScreen.routeName: (_) => SearchScreen(),
           },
         ));
   }
